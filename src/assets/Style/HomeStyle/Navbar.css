@@ -76,8 +76,8 @@ body, html {
 }
 
 .navbar-button.sign-up {
-  background-color: #000;
-  color: #fff;
+  background-color: #fff;
+  color: #ff6347;
 }
 
 .navbar-button.sign-up:hover {

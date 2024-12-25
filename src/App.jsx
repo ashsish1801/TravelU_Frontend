@@ -21,6 +21,7 @@ import Logo from './Component/Tourism/logo';
 import Aboutus from "./Component/Home/AboutUs";
 import Navbar from "./Component/Home/Navbar";
 import ProtectedRoute from "./Component/Authentication/ProtectedRoute";
+import TourismUploader from './Component/AdminPanel/TourismUploader'
 function App() {
   return (
     <>
@@ -64,6 +65,8 @@ function App() {
           element={<Signup/>}/>
           <Route path="/verify"
           element={<EmailVerify/>}/>
+          
+        <Route path="/Admin" element={<TourismUploader/>}></Route>
         </Routes>
         <Footer/>
       </BrowserRouter>
