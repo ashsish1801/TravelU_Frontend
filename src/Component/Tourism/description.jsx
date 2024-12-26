@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'; // Use Axios or Fetch API for HTTP requests
 import '../../assets/Style/TourismStyle/description.css';
+import axiosInstance from '../Authentication/axios';
 
 const services = [
   {
@@ -31,9 +32,9 @@ const Description = () => {
       try {
         const response = await axios.get('http://localhost:8080/tours');
         // const data = Array.isArray(response.data)? response.data: Object.values(response.data); 
-        const data = Array.isArray(response.data) && Array.isArray(response.data[0]) ? response.data[0] : response.data;
-        console.log("data",response.data);
-        setTours(data); // Set the tours data if it's an array
+        // const data = Array.isArray(response.data) && Array.isArray(response.data[0]) ? response.data[0] : response.data;
+        console.log("data",response.data.tours);
+        setTours(response.data.tours); // Set the tours data if it's an array
       } catch (err) {
         console.error("Error fetching tours data:", err);
         setError("Failed to load tours. Please try again later.");
@@ -114,7 +115,7 @@ const Description = () => {
             </button>
           </div>
         </div>
-          {console.log(tours)}
+          {console.log("tours",tours)}
 
         <div className="tours-container" ref={scrollContainerRef}>
           {/* Error Message */}
@@ -125,11 +126,12 @@ const Description = () => {
             tours.map((tour) => (
               <div key={tour._id} className="tour-card">
                 <div className="card-image-container">
+                  {console.log(`http://localhost:8080/${tour.image}`)}
                   <img
-                    src={tour.image}
+                    src={`http://localhost:8080${tour.image}`} 
                     alt={tour.title}
                     className="card-image"
-                  />
+                    />
                   {tour.discount && (
                     <span className="discount-badge">
                       {tour.discount}% Off
