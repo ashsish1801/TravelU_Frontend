@@ -33,7 +33,7 @@ const Description = () => {
         const response = await axios.get('http://localhost:8080/tours');
         // const data = Array.isArray(response.data)? response.data: Object.values(response.data); 
         // const data = Array.isArray(response.data) && Array.isArray(response.data[0]) ? response.data[0] : response.data;
-        console.log("data",response.data.tours);
+        // console.log("data",response.data.tours);
         setTours(response.data.tours); // Set the tours data if it's an array
       } catch (err) {
         console.error("Error fetching tours data:", err);
@@ -73,6 +73,19 @@ const Description = () => {
         <span className="review-count">({reviews} Review{reviews > 1 ? 's' : ''})</span>
       </div>
     );
+  };
+  const storedUserId = localStorage.getItem('userId');
+
+  const handleBookNow = async (id , storedUserId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/invoiceSender/${id}/${storedUserId}`);
+
+      console.log("Booking response:", response.data);
+      alert("Booking successful!");
+    } catch (error) {
+      console.error("Error booking tour:", error);
+      // alert("Failed to book the tour. Please try again.");
+    }
   };
 
   return (
@@ -115,7 +128,7 @@ const Description = () => {
             </button>
           </div>
         </div>
-          {console.log("tours",tours)}
+          {/* {console.log("tours",tours)} */}
 
         <div className="tours-container" ref={scrollContainerRef}>
           {/* Error Message */}
@@ -126,7 +139,7 @@ const Description = () => {
             tours.map((tour) => (
               <div key={tour._id} className="tour-card">
                 <div className="card-image-container">
-                  {console.log(`http://localhost:8080/${tour.image}`)}
+                  {/* {console.log(`http://localhost:8080/${tour.image}`)} */}
                   <img
                     src={`http://localhost:8080${tour.image}`} 
                     alt={tour.title}
@@ -161,6 +174,9 @@ const Description = () => {
                         {tour.price}
                       </span>
                     </div>
+                  </div>
+                  <div className="card-action">
+                    <button onClick={()=>handleBookNow(tour._id , storedUserId)} className="book-now-button">Book Now</button>
                   </div>
                 </div>
               </div>
